@@ -54,10 +54,23 @@ export type SalonSettings = {
   logo?: string; // data URL
 };
 
+export type Payment = {
+  id: string;
+  invoiceId: string;
+  invoiceNumber: string;
+  customerId: string;
+  customerName: string;
+  amount: number;
+  method: "cash" | "card" | "eft" | "other";
+  reference?: string;
+  receivedAt: string; // ISO
+};
+
 const KEYS = {
   products: "salon.products",
   customers: "salon.customers",
   docs: "salon.docs",
+  payments: "salon.payments",
   settings: "salon.settings",
   counters: "salon.counters",
 };
