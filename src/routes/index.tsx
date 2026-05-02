@@ -1,26 +1,86 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useDocs, useCustomers, useProducts, formatZAR } from "@/lib/pos-store";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TrendingUp, Users, Package, FileText } from "lucide-react";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  component: Dashboard,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Dashboard() {
+  const [docs] = useDocs();
+  const [customers] = useCustomers();
+  const [products] = useProducts();
+
+  const invoices = docs.filter((d) => d.type === "invoice");
+  const revenue = invoices.filter((i) => i.status === "paid").reduce((s, i) => s + i.total, 0);
+  const outstanding = invoices.filter((i) => i.status !== "paid").reduce((s, i) => s + i.total, 0);
+
+  const recent = [...docs].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 5);
+
+  const stats = [
+    { label: "Revenue (paid)", value: formatZAR(revenue), icon: TrendingUp },
+    { label: "Outstanding", value: formatZAR(outstanding), icon: FileText },
+    { label: "Customers", value: customers.length, icon: Users },
+    { label: "Treatments", value: products.length, icon: Package },
+  ];
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
+        <p className="text-muted-foreground mt-1">Overview of your salon today.</p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {stats.map((s) => {
+          const Icon = s.icon;
+          return (
+            <Card key={s.label}>
+              <CardContent className="pt-6">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                      {s.label}
+                    </div>
+                    <div className="text-2xl font-semibold mt-2">{s.value}</div>
+                  </div>
+                  <Icon className="h-4 w-4 text-muted-foreground" />
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Recent documents</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {recent.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No quotes or invoices yet. Create one from the Quotes & Invoices page.
+            </p>
+          ) : (
+            <div className="divide-y divide-border">
+              {recent.map((d) => (
+                <div key={d.id} className="py-3 flex items-center justify-between">
+                  <div>
+                    <div className="font-medium">
+                      {d.number} · {d.customerName}
+                    </div>
+                    <div className="text-xs text-muted-foreground capitalize">
+                      {d.type} · {d.status}
+                    </div>
+                  </div>
+                  <div className="font-semibold">{formatZAR(d.total)}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
