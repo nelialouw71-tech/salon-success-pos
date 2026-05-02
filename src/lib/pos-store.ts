@@ -158,6 +158,7 @@ function useStored<T>(key: string, fallback: T) {
 export const useProducts = () => useStored<Product[]>(KEYS.products, []);
 export const useCustomers = () => useStored<Customer[]>(KEYS.customers, []);
 export const useDocs = () => useStored<SalonDoc[]>(KEYS.docs, []);
+export const usePayments = () => useStored<Payment[]>(KEYS.payments, []);
 export const useSettings = () => useStored<SalonSettings>(KEYS.settings, DEFAULT_SETTINGS);
 
 export function nextDocNumber(type: DocType): string {
