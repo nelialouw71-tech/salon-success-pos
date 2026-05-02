@@ -34,6 +34,36 @@ function SettingsPage() {
         <CardHeader><CardTitle>Business</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
+            <Label>Company logo</Label>
+            <div className="flex items-center gap-4">
+              {form.logo ? (
+                <img src={form.logo} alt="Salon logo" className="h-16 w-16 rounded-md object-cover border border-border" />
+              ) : (
+                <div className="h-16 w-16 rounded-md border border-dashed border-border flex items-center justify-center text-xs text-muted-foreground">
+                  No logo
+                </div>
+              )}
+              <div className="flex flex-col gap-2">
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = () => setForm({ ...form, logo: reader.result as string });
+                    reader.readAsDataURL(file);
+                  }}
+                />
+                {form.logo && (
+                  <Button type="button" variant="outline" size="sm" onClick={() => setForm({ ...form, logo: undefined })}>
+                    Remove logo
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="space-y-2">
             <Label>Business name</Label>
             <Input value={form.businessName}
               onChange={(e) => setForm({ ...form, businessName: e.target.value })} />
