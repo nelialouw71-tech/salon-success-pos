@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { useCustomers, buildWhatsAppLink } from "@/lib/pos-store";
+import { useCustomers, useSettings, buildWhatsAppLink } from "@/lib/pos-store";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,6 +23,7 @@ See you soon!`;
 
 function SpecialsPage() {
   const [customers] = useCustomers();
+  const [settings] = useSettings();
   const [message, setMessage] = useState(TEMPLATE);
   const [selected, setSelected] = useState<Set<string>>(new Set());
 
@@ -42,11 +43,16 @@ function SpecialsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-semibold tracking-tight">WhatsApp Specials</h1>
-        <p className="text-muted-foreground mt-1">
-          Compose your offer, pick recipients, then click each one to send via WhatsApp.
-        </p>
+      <div className="flex items-center gap-4">
+        {settings.logo && (
+          <img src={settings.logo} alt={settings.businessName} className="h-14 w-14 rounded-lg object-cover border border-border shadow-sm" />
+        )}
+        <div>
+          <h1 className="text-3xl font-semibold tracking-tight">WhatsApp Specials</h1>
+          <p className="text-muted-foreground mt-1">
+            Compose your offer, pick recipients, then click each one to send via WhatsApp.
+          </p>
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">

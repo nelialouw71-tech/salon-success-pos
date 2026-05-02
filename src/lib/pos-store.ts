@@ -51,6 +51,7 @@ export type SalonSettings = {
   phone: string;
   address: string;
   vatRate: number;
+  logo?: string; // data URL
 };
 
 const KEYS = {
