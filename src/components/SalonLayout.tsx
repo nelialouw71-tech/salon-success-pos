@@ -59,7 +59,8 @@ export function SalonLayout() {
         </aside>
 
         <div className="flex-1 min-w-0">
-          <header className="md:hidden border-b border-border bg-card px-4 py-3 flex items-center justify-between">
+          <header className="md:hidden border-b border-border bg-card px-4 py-3 flex items-center gap-2">
+            {settings.logo && <img src={settings.logo} alt="Logo" className="h-8 w-8 rounded object-cover" />}
             <div className="font-semibold">{settings.businessName}</div>
           </header>
           <nav className="md:hidden flex overflow-x-auto gap-1 px-2 py-2 border-b border-border bg-card">
