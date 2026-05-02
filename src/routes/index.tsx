@@ -36,16 +36,16 @@ function Dashboard() {
         {stats.map((s) => {
           const Icon = s.icon;
           return (
-            <Card key={s.label}>
+            <Card key={s.label} className="overflow-hidden border-0" style={{ background: s.tint, boxShadow: "var(--shadow-soft)" }}>
               <CardContent className="pt-6">
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                    <div className="text-xs uppercase tracking-wide text-foreground/60">
                       {s.label}
                     </div>
                     <div className="text-2xl font-semibold mt-2">{s.value}</div>
                   </div>
-                  <Icon className="h-4 w-4 text-muted-foreground" />
+                  <Icon className="h-5 w-5 text-foreground/70" />
                 </div>
               </CardContent>
             </Card>
