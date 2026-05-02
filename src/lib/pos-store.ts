@@ -121,6 +121,7 @@ function ensureSeeded() {
   if (!localStorage.getItem(KEYS.products)) write(KEYS.products, DEFAULT_PRODUCTS);
   if (!localStorage.getItem(KEYS.customers)) write(KEYS.customers, [] as Customer[]);
   if (!localStorage.getItem(KEYS.docs)) write(KEYS.docs, [] as SalonDoc[]);
+  if (!localStorage.getItem(KEYS.payments)) write(KEYS.payments, [] as Payment[]);
   if (!localStorage.getItem(KEYS.settings)) write(KEYS.settings, DEFAULT_SETTINGS);
 }
 
