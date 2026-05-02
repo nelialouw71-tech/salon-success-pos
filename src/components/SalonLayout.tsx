@@ -20,8 +20,15 @@ export function SalonLayout() {
       <div className="flex">
         <aside className="hidden md:flex w-64 min-h-screen flex-col border-r border-sidebar-border bg-sidebar">
           <div className="px-6 py-6 border-b border-sidebar-border" style={{ background: "var(--gradient-primary)" }}>
-            <div className="text-xs uppercase tracking-widest text-primary-foreground/80">Salon POS</div>
-            <div className="mt-1 font-semibold text-lg leading-tight text-primary-foreground">{settings.businessName}</div>
+            <div className="flex items-center gap-3">
+              {settings.logo && (
+                <img src={settings.logo} alt="Logo" className="h-10 w-10 rounded-md object-cover bg-white/20 p-0.5" />
+              )}
+              <div className="min-w-0">
+                <div className="text-xs uppercase tracking-widest text-primary-foreground/80">Salon POS</div>
+                <div className="mt-0.5 font-semibold text-lg leading-tight text-primary-foreground truncate">{settings.businessName}</div>
+              </div>
+            </div>
           </div>
           <nav className="flex-1 px-3 py-4 space-y-1">
             {nav.map((item) => {
