@@ -54,10 +54,23 @@ export type SalonSettings = {
   logo?: string; // data URL
 };
 
+export type Payment = {
+  id: string;
+  invoiceId: string;
+  invoiceNumber: string;
+  customerId: string;
+  customerName: string;
+  amount: number;
+  method: "cash" | "card" | "eft" | "other";
+  reference?: string;
+  receivedAt: string; // ISO
+};
+
 const KEYS = {
   products: "salon.products",
   customers: "salon.customers",
   docs: "salon.docs",
+  payments: "salon.payments",
   settings: "salon.settings",
   counters: "salon.counters",
 };
@@ -108,6 +121,7 @@ function ensureSeeded() {
   if (!localStorage.getItem(KEYS.products)) write(KEYS.products, DEFAULT_PRODUCTS);
   if (!localStorage.getItem(KEYS.customers)) write(KEYS.customers, [] as Customer[]);
   if (!localStorage.getItem(KEYS.docs)) write(KEYS.docs, [] as SalonDoc[]);
+  if (!localStorage.getItem(KEYS.payments)) write(KEYS.payments, [] as Payment[]);
   if (!localStorage.getItem(KEYS.settings)) write(KEYS.settings, DEFAULT_SETTINGS);
 }
 
@@ -144,6 +158,7 @@ function useStored<T>(key: string, fallback: T) {
 export const useProducts = () => useStored<Product[]>(KEYS.products, []);
 export const useCustomers = () => useStored<Customer[]>(KEYS.customers, []);
 export const useDocs = () => useStored<SalonDoc[]>(KEYS.docs, []);
+export const usePayments = () => useStored<Payment[]>(KEYS.payments, []);
 export const useSettings = () => useStored<SalonSettings>(KEYS.settings, DEFAULT_SETTINGS);
 
 export function nextDocNumber(type: DocType): string {
