@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { useCustomers, buildWhatsAppLink } from "@/lib/pos-store";
+import { useCustomers, useSettings, buildWhatsAppLink } from "@/lib/pos-store";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
