@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from "@tanstack/react-router";
-import { LayoutDashboard, Package, Users, FileText, MessageCircle, Settings } from "lucide-react";
+import { LayoutDashboard, Package, Users, FileText, MessageCircle, Settings, Wallet, BarChart3 } from "lucide-react";
 import { useSettings } from "@/lib/pos-store";
 
 const nav = [
@@ -7,6 +7,8 @@ const nav = [
   { to: "/products", label: "Treatments", icon: Package },
   { to: "/customers", label: "Customers", icon: Users },
   { to: "/documents", label: "Quotes & Invoices", icon: FileText },
+  { to: "/payments", label: "Payments Received", icon: Wallet },
+  { to: "/reports", label: "Statements", icon: BarChart3 },
   { to: "/specials", label: "WhatsApp Specials", icon: MessageCircle },
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
