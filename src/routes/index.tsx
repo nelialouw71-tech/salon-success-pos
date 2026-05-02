@@ -19,33 +19,33 @@ function Dashboard() {
   const recent = [...docs].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 5);
 
   const stats = [
-    { label: "Revenue (paid)", value: formatZAR(revenue), icon: TrendingUp },
-    { label: "Outstanding", value: formatZAR(outstanding), icon: FileText },
-    { label: "Customers", value: customers.length, icon: Users },
-    { label: "Treatments", value: products.length, icon: Package },
+    { label: "Revenue (paid)", value: formatZAR(revenue), icon: TrendingUp, tint: "oklch(0.95 0.06 145)" },
+    { label: "Outstanding", value: formatZAR(outstanding), icon: FileText, tint: "oklch(0.95 0.07 60)" },
+    { label: "Customers", value: customers.length, icon: Users, tint: "oklch(0.95 0.07 350)" },
+    { label: "Treatments", value: products.length, icon: Package, tint: "oklch(0.95 0.06 280)" },
   ];
 
   return (
     <div className="space-y-8">
-      <div>
+      <div className="rounded-2xl p-6 md:p-8 text-primary-foreground" style={{ background: "var(--gradient-primary)", boxShadow: "var(--shadow-soft)" }}>
         <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Overview of your salon today.</p>
+        <p className="text-primary-foreground/85 mt-1">Welcome back — here's how your salon is doing today. ✨</p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {stats.map((s) => {
           const Icon = s.icon;
           return (
-            <Card key={s.label}>
+            <Card key={s.label} className="overflow-hidden border-0" style={{ background: s.tint, boxShadow: "var(--shadow-soft)" }}>
               <CardContent className="pt-6">
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                    <div className="text-xs uppercase tracking-wide text-foreground/60">
                       {s.label}
                     </div>
                     <div className="text-2xl font-semibold mt-2">{s.value}</div>
                   </div>
-                  <Icon className="h-4 w-4 text-muted-foreground" />
+                  <Icon className="h-5 w-5 text-foreground/70" />
                 </div>
               </CardContent>
             </Card>

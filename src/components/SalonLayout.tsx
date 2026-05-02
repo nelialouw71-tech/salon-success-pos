@@ -16,12 +16,12 @@ export function SalonLayout() {
   const [settings] = useSettings();
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground" style={{ background: "var(--gradient-soft)" }}>
       <div className="flex">
-        <aside className="hidden md:flex w-64 min-h-screen flex-col border-r border-border bg-card">
-          <div className="px-6 py-6 border-b border-border">
-            <div className="text-xs uppercase tracking-widest text-muted-foreground">Salon POS</div>
-            <div className="mt-1 font-semibold text-lg leading-tight">{settings.businessName}</div>
+        <aside className="hidden md:flex w-64 min-h-screen flex-col border-r border-sidebar-border bg-sidebar">
+          <div className="px-6 py-6 border-b border-sidebar-border" style={{ background: "var(--gradient-primary)" }}>
+            <div className="text-xs uppercase tracking-widest text-primary-foreground/80">Salon POS</div>
+            <div className="mt-1 font-semibold text-lg leading-tight text-primary-foreground">{settings.businessName}</div>
           </div>
           <nav className="flex-1 px-3 py-4 space-y-1">
             {nav.map((item) => {
