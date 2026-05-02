@@ -16,7 +16,7 @@ export function SalonLayout() {
   const [settings] = useSettings();
 
   return (
-    <div className="min-h-screen bg-background text-foreground" style={{ background: "var(--gradient-soft)" }}>
+    <div className="min-h-screen bg-background text-foreground">
       <div className="flex">
         <aside className="hidden md:flex w-64 min-h-screen flex-col border-r border-sidebar-border bg-sidebar">
           <div className="px-6 py-6 border-b border-sidebar-border" style={{ background: "var(--gradient-primary)" }}>
