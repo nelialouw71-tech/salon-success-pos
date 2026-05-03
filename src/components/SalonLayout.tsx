@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
+import { Link, Outlet, useLocation } from "@tanstack/react-router";
 import { LayoutDashboard, Package, Users, FileText, MessageCircle, Settings, Wallet, BarChart3 } from "lucide-react";
 import { useSettings } from "@/lib/pos-store";
 
@@ -15,7 +15,6 @@ const nav = [
 
 export function SalonLayout() {
   const location = useLocation();
-  const navigate = useNavigate();
   const [settings] = useSettings();
 
   return (
@@ -75,10 +74,9 @@ export function SalonLayout() {
               const Icon = item.icon;
 
               return (
-                <button
+                <a
                   key={item.to}
-                  type="button"
-                  onClick={() => navigate({ to: item.to })}
+                  href={item.to}
                   className={`flex min-h-16 flex-col items-center justify-center gap-1 rounded-md border px-2 py-2 text-center text-[11px] font-medium transition-colors ${
                     active
                       ? "border-primary bg-primary text-primary-foreground"
@@ -90,7 +88,7 @@ export function SalonLayout() {
                 >
                   <Icon className="h-4 w-4 shrink-0" />
                   <span className="leading-tight">{item.mobileLabel}</span>
-                </button>
+                </a>
               );
             })}
           </nav>
