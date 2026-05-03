@@ -3,14 +3,14 @@ import { LayoutDashboard, Package, Users, FileText, MessageCircle, Settings, Wal
 import { useSettings } from "@/lib/pos-store";
 
 const nav = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/products", label: "Treatments", icon: Package },
-  { to: "/customers", label: "Customers", icon: Users },
-  { to: "/documents", label: "Quotes & Invoices", icon: FileText },
-  { to: "/payments", label: "Payments Received", icon: Wallet },
-  { to: "/reports", label: "Statements", icon: BarChart3 },
-  { to: "/specials", label: "WhatsApp Specials", icon: MessageCircle },
-  { to: "/settings", label: "Settings", icon: Settings },
+  { to: "/", label: "Dashboard", mobileLabel: "Home", icon: LayoutDashboard },
+  { to: "/products", label: "Treatments", mobileLabel: "Treatments", icon: Package },
+  { to: "/customers", label: "Customers", mobileLabel: "Customers", icon: Users },
+  { to: "/documents", label: "Quotes & Invoices", mobileLabel: "Quotes", icon: FileText },
+  { to: "/payments", label: "Payments Received", mobileLabel: "Payments", icon: Wallet },
+  { to: "/reports", label: "Statements", mobileLabel: "Reports", icon: BarChart3 },
+  { to: "/specials", label: "WhatsApp Specials", mobileLabel: "WhatsApp", icon: MessageCircle },
+  { to: "/settings", label: "Settings", mobileLabel: "Settings", icon: Settings },
 ] as const;
 
 export function SalonLayout() {
@@ -65,26 +65,34 @@ export function SalonLayout() {
             {settings.logo && <img src={settings.logo} alt="Logo" className="h-8 w-8 rounded object-cover" />}
             <div className="font-semibold">{settings.businessName}</div>
           </header>
-          <nav className="md:hidden flex overflow-x-auto gap-1 px-2 py-2 border-b border-border bg-card">
+          <nav className="md:hidden grid grid-cols-4 gap-2 border-b border-border bg-card px-3 py-3">
             {nav.map((item) => {
               const active =
                 item.to === "/"
                   ? location.pathname === "/"
                   : location.pathname.startsWith(item.to);
+              const Icon = item.icon;
+
               return (
-                <Link
+                <a
                   key={item.to}
-                  to={item.to}
-                  className={`px-3 py-1.5 rounded-md text-xs whitespace-nowrap ${
-                    active ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+                  href={item.to}
+                  className={`flex min-h-16 flex-col items-center justify-center gap-1 rounded-md border px-2 py-2 text-center text-[11px] font-medium transition-colors ${
+                    active
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border bg-background text-muted-foreground hover:bg-secondary hover:text-foreground"
                   }`}
+                  style={{ touchAction: "manipulation" }}
+                  aria-current={active ? "page" : undefined}
+                  aria-label={item.label}
                 >
-                  {item.label}
-                </Link>
+                  <Icon className="h-4 w-4 shrink-0" />
+                  <span className="leading-tight">{item.mobileLabel}</span>
+                </a>
               );
             })}
           </nav>
-          <main className="p-4 md:p-8 max-w-6xl mx-auto">
+          <main className="mx-auto max-w-6xl p-4 md:p-8">
             <Outlet />
           </main>
         </div>
