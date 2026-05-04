@@ -74,6 +74,40 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  // Android WebView fix: Radix Dialog/Select/Dropdown sometimes leaves
+  // `pointer-events: none` (and overflow:hidden) on <body> after closing,
+  // freezing the entire app on Android. Watch for it and strip it.
+  if (typeof window !== "undefined") {
+    // Run once per mount via a layout effect-like inline guard.
+    // (Using a module-level flag avoids attaching multiple observers.)
+    if (!(window as unknown as { __bodyPeFix?: boolean }).__bodyPeFix) {
+      (window as unknown as { __bodyPeFix?: boolean }).__bodyPeFix = true;
+      const fix = () => {
+        const body = document.body;
+        if (!body) return;
+        if (body.style.pointerEvents === "none") {
+          body.style.pointerEvents = "";
+        }
+      };
+      const obs = new MutationObserver(fix);
+      // Defer until body exists
+      const start = () => {
+        if (document.body) {
+          obs.observe(document.body, { attributes: true, attributeFilter: ["style"] });
+          fix();
+        } else {
+          setTimeout(start, 50);
+        }
+      };
+      start();
+      // Safety net: periodic sweep
+      setInterval(fix, 1000);
+      // Also clear on touch/click
+      document.addEventListener("touchstart", fix, { passive: true, capture: true });
+      document.addEventListener("click", fix, { capture: true });
+    }
+  }
+
   return (
     <>
       <SalonLayout />
