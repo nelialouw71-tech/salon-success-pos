@@ -146,4 +146,11 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+
+  /* Android WebView fix: Radix Dialog/Select sometimes leaves
+     pointer-events: none on <body> after closing, freezing the whole app.
+     Force it back on so taps always register. */
+  body[style*="pointer-events"] {
+    pointer-events: auto !important;
+  }
 }
